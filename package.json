@@ -1,0 +1,27 @@
+{
+  "name": "bigquery-analysis-mcp-server",
+  "version": "0.1.0",
+  "description": "Run query in bigquery for analytics.",
+  "private": true,
+  "type": "module",
+  "bin": {
+    "bigquery-analysis-mcp-server": "./build/index.js"
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "build": "tsc && node -e \"require('fs').chmodSync('build/index.js', '755')\"",
+    "prepare": "npm run build",
+    "watch": "tsc --watch",
+    "inspector": "npx @modelcontextprotocol/inspector build/index.js"
+  },
+  "dependencies": {
+    "@google-cloud/bigquery": "^7.9.2",
+    "@modelcontextprotocol/sdk": "^1.7.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.11",
+    "typescript": "^5.8.2"
+  }
+}
