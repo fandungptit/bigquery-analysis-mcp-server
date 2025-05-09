@@ -13,11 +13,20 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { ErrorCode, McpError } from "@modelcontextprotocol/sdk/types.js";
 import { BigQuery } from "@google-cloud/bigquery";
 import { z } from "zod";
+const path = require('path');
 
+
+const GOOGLE_APPLICATION_CREDENTIALS = process.env.GOOGLE_APPLICATION_CREDENTIALS;
+if (!GOOGLE_APPLICATION_CREDENTIALS) {
+  console.error('GOOGLE_APPLICATION_CREDENTIALS environment variable is required');
+  process.exit(1);
+}
 // Initialize BigQuery client
 // Note: This uses application default credentials
 // The user needs to have set up authentication via gcloud CLI or service account
-const bigquery = new BigQuery();
+const bigquery = new BigQuery({
+  keyFilename: path.join(__dirname, GOOGLE_APPLICATION_CREDENTIALS) // Thay đường dẫn tới file key JSON
+});
 
 // Size limit for queries (1 TB in bytes)
 const SIZE_LIMIT_BYTES = 1_099_511_627_776; // 1 TB
